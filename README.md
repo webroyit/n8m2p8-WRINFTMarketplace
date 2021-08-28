@@ -15,3 +15,13 @@ npx tailwindcss init -p
 @tailwind components;
 @tailwind utilities;
 ```
+
+## Setting up Hardhat
+- Install the Hardhat dependencies
+```
+npm install hardhat @nomiclabs/hardhat-waffle ethereum-waffle @nomiclabs/hardhat-ethers 
+```
+- Initialize a new Hardhat development environment
+```
+npx hardhat
+```

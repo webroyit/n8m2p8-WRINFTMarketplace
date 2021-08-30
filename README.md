@@ -25,3 +25,8 @@ npm install hardhat @nomiclabs/hardhat-waffle ethereum-waffle @nomiclabs/hardhat
 ```
 npx hardhat
 ```
+
+## Notes
+- Solidity does not have dynamic length of arrarys
+- `struct` is an object or map
+- `event ` is for getting result from the contract on the front end

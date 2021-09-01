@@ -30,3 +30,4 @@ npx hardhat
 - Solidity does not have dynamic length of arrarys
 - `struct` is an object or map
 - `event ` is for getting result from the contract on the front end
+- `npx hardhat test` to run test

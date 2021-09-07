@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import axios from 'axios'     // Data fetching library
+import Web3Modal from "web3modal"   // For connecting to ethereum wallet
 
 import {
   nftaddress, nftmarketaddress
@@ -45,6 +46,24 @@ export default function Home() {
     }))
     setNfts(items)
     setLoadingState('loaded') 
+  }
+
+  async function buyNft(nft) {
+    // Needs the user to sign the transaction, so will use Web3Provider and sign it
+    const web3Modal = new Web3Modal()   // Look for instance of ethereum wallet being ejected into the web browser 
+    const connection = await web3Modal.connect()
+    const provider = new ethers.providers.Web3Provider(connection)
+    const signer = provider.getSigner()   // To sign and execute a transaction
+    const contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+
+    // User will be prompted to pay the asking proces to complete the transaction
+    const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')   
+    const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
+      value: price
+    })
+    // Reload
+    await transaction.wait()
+    loadNFTs()
   }
 
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)

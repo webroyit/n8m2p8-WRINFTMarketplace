@@ -15,7 +15,18 @@ export default function Home() {
   const [loadingState, setLoadingState] = useState('not-loaded')
 
   useEffect(() => {
-    loadNFTs()
+    //loadNFTs()
+    setNfts([
+      {
+        price: '1',
+        tokenId: 1,
+        seller: "0x0wef2131",
+        owner: "0x0123123123",
+        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1366&q=80",
+        name: "Flower",
+        description: "It is a flower",
+      }
+    ])
   }, [])
 
   async function loadNFTs() {
@@ -69,8 +80,28 @@ export default function Home() {
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
 
   return (
-    <div>
-      <h1>Home</h1>
+    <div className="flex justify-center">
+      <div className="px-4" style={{ maxWidth: '1600px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
+          {
+            nfts.map((nft, i) => (
+              <div key={i} className="border shadow rounded-xl overflow-hidden">
+                <img src={nft.image} />
+                <div className="p-4">
+                  <p style={{ height: '64px' }} className="text-2xl font-semibold">{nft.name}</p>
+                  <div style={{ height: '70px', overflow: 'hidden' }}>
+                    <p className="text-gray-400">{nft.description}</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-black">
+                  <p className="text-2xl mb-4 font-bold text-white">{nft.price} ETH</p>
+                  <button className="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>Buy</button>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
   )
 }

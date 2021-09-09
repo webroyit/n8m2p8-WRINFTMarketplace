@@ -15,18 +15,18 @@ export default function Home() {
   const [loadingState, setLoadingState] = useState('not-loaded')
 
   useEffect(() => {
-    //loadNFTs()
-    setNfts([
-      {
-        price: '1',
-        tokenId: 1,
-        seller: "0x0wef2131",
-        owner: "0x0123123123",
-        image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1366&q=80",
-        name: "Flower",
-        description: "It is a flower",
-      }
-    ])
+    loadNFTs()
+    // setNfts([
+    //   {
+    //     price: '1',
+    //     tokenId: 1,
+    //     seller: "0x0wef2131",
+    //     owner: "0x0123123123",
+    //     image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1366&q=80",
+    //     name: "Flower",
+    //     description: "It is a flower",
+    //   }
+    // ])
   }, [])
 
   async function loadNFTs() {

@@ -31,3 +31,5 @@ npx hardhat
 - `struct` is an object or map
 - `event ` is for getting result from the contract on the front end
 - `npx hardhat test` to run test
+- `npx hardhat node` to spin up a local network
+- `npx hardhat run scripts/deploy.js --network localhost` to deploy the contracts to localhost

@@ -1,8 +1,12 @@
 // pages/create-item.js
 import { useState } from 'react'
 import { ethers } from 'ethers'
+import { create as ipfsHttpClient } from 'ipfs-http-client'     // Interact with IPFS for uploading and downloading files
 import { useRouter } from 'next/router'     // Programmatically route to different routes
 import Web3Modal from 'web3modal'
+
+// This is using Infura URL that sets and pins items to IPFS
+const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 import {
   nftaddress, nftmarketaddress
@@ -16,6 +20,24 @@ export default function CreateItem() {
 	const [fileUrl, setFileUrl] = useState(null)	// For IPFS file
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' })		// For form inputs
 	const router = useRouter()		 // A refercence to the router from useRouter hook
+
+  async function onChange(e) {
+    const file = e.target.files[0]  // Take the first image that was uploaded
+    try {
+      // Upload the file to IPFS
+      const added = await client.add(
+        file,
+        {
+          // Progress callback
+          progress: (prog) => console.log(`received: ${prog}`)
+        }
+      )
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      setFileUrl(url)
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }  
+  }
 
 	return (
     <div className="flex justify-center">
@@ -39,6 +61,7 @@ export default function CreateItem() {
           type="file"
           name="Asset"
           className="my-4"
+          onChange={onChange}
         />
         {
           fileUrl && (

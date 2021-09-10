@@ -39,6 +39,28 @@ export default function CreateItem() {
     }  
   }
 
+  async function CreateItem() {
+    // Get the inputs
+    const { name, description, price } = formInput
+
+    // Break if these input field are null
+    if (!name || !description || !price || !fileUrl) return
+
+    // First, upload to IPFS
+    const data = JSON.stringify({
+      name, description, image: fileUrl
+    })
+
+    try {
+      // Save json data to IPFS
+      const added = await client.add(data)
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      console.log(url);
+    } catch (error) {
+      console.log('Error uploading file: ', error)
+    }  
+  }
+
 	return (
     <div className="flex justify-center">
       <div className="w-1/2 flex flex-col pb-12">
@@ -68,7 +90,7 @@ export default function CreateItem() {
             <img className="rounded mt-4" width="350" src={fileUrl} />
           )
         }
-        <button className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+        <button onClick={CreateItem} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
           Create Digital Asset
         </button>
       </div>

@@ -55,10 +55,39 @@ export default function CreateItem() {
       // Save json data to IPFS
       const added = await client.add(data)
       const url = `https://ipfs.infura.io/ipfs/${added.path}`
+      // After file is uploaded to IPFS, pass the URL to save it on blockchain
+      createSale(url)
       console.log(url);
     } catch (error) {
       console.log('Error uploading file: ', error)
     }  
+  }
+
+  async function createSale(url) {
+    const web3Modal = new Web3Modal()
+    const connection = await web3Modal.connect()
+    const provider = new ethers.providers.Web3Provider(connection)    
+    const signer = provider.getSigner()
+
+    // Create the item
+    let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
+    let transaction = await contract.createToken(url)
+    let tx = await transaction.wait()   // Wait for transaction to pass
+    let event = tx.events[0]
+    console.log(tx)
+    let value = event.args[2]     // Return a big number
+    let tokenId = value.toNumber()      // To big number into number
+    const price = ethers.utils.parseUnits(formInput.price, 'ether')
+
+    // List the item for sale on the marketplace
+    contract = new ethers.Contract(nftmarketaddress, Market.abi, signer)
+    let listingPrice = await contract.getListingPrice()
+    listingPrice = listingPrice.toString()
+
+    // Put the item on sale
+    transaction = await contract.createMarketItem(nftaddress, tokenId, price, { value: listingPrice })
+    await transaction.wait()
+    router.push('/')    // Rerouter the user to the main page
   }
 
 	return (
@@ -85,6 +114,7 @@ export default function CreateItem() {
           className="my-4"
           onChange={onChange}
         />
+        {/* Show a preview of the image */}
         {
           fileUrl && (
             <img className="rounded mt-4" width="350" src={fileUrl} />

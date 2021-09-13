@@ -33,4 +33,5 @@ npx hardhat
 - `npx hardhat test` to run test
 - `npx hardhat node` to spin up a local network
 - `npx hardhat run scripts/deploy.js --network localhost` to deploy the contracts to localhost
+- `npx hardhat run scripts/deploy.js --network mumbai` to deploy the contracts to Polygon mumbai network
 - [MetaMask chainId issue](https://hardhat.org/metamask-issue.html)

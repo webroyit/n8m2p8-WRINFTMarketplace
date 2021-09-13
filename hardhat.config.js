@@ -1,4 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
+const privateKey = "";
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -22,6 +23,11 @@ module.exports = {
     hardhat: {
       chainId: 1337
     },
+    mumbai: {
+      url: "https://rpc-mumbai.maticvigil.com/",
+      accounts: [privateKey],
+      gasPrice: 8000000000     // Default is 'auto' which breaks chains without the london hardfork
+    }
   },
   solidity: {
     version: "0.8.4",

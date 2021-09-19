@@ -1,4 +1,5 @@
 # NFT Marketplace
+NFT Marketplace.  The template is from Nader Dabit youtube channel.
 
 ## Setting up Tailwind CSS
 - Install the Tailwind dependencies
@@ -17,8 +18,6 @@ npx tailwindcss init -p
 ```
 
 ## Setting up Hardhat
-NFT Marketplace.  The template is from Nader Dabit youtube channel.
-
 - Install the Hardhat dependencies
 ```
 npm install hardhat @nomiclabs/hardhat-waffle ethereum-waffle @nomiclabs/hardhat-ethers 
